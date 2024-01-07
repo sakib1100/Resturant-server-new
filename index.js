@@ -78,12 +78,13 @@ app.post('/postData', async(req,res) => {
   res.send(query);
 })
 
-app.get('/getPostData', async (req, res) => {
+app.get("/getPostData", async (req, res) => {
   try {
-    const data = await OrderList.find().toArray(); 
-    res.send(data);
+    const { email } = req.query;
+    const booking = await OrderList.find({ email }).toArray();
+    res.send(booking);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 });
